@@ -1,4 +1,4 @@
-addpath('../DSGE_tools');
+addpath('DSGE_tools/');
 
 %% RBC
 %Load Parameters
