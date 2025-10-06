@@ -1,7 +1,7 @@
 %**************************************************************
 % SOLVE_LINEAR: Does some stuff.
 %**************************************************************
-addpath('../DSGE_tools');
+addpath('DSGE_tools');
 
 nper  = 20;
 nerf  = 5000;
@@ -157,7 +157,7 @@ for ss = 4:6
     end
 end
 
-saveas(f, '../../../slides/BC_macro_lunch/Figures/fg_taylor_compare1.eps', 'epsc');
+saveas(f, 'figures_tables/fg_taylor_compare1.eps', 'epsc');
 
 for ss = [1,3]
     for jj = 1:4
@@ -165,6 +165,6 @@ for ss = [1,3]
         p{jj,ss+3}.Visible = 'on';
     end
 end
-saveas(f, '../../../slides/BC_macro_lunch/Figures/fg_taylor_compare2.eps', 'epsc');
+saveas(f, 'figures_tables/fg_taylor_compare2.eps', 'epsc');
 
-exportgraphics(f, '../../../paper/figures_tables/fg_taylor_compare2.jpg','Resolution',300);
+exportgraphics(f, 'figures_tables/fg_taylor_compare2.jpg','Resolution',300);

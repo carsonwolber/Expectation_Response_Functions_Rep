@@ -1,7 +1,7 @@
 %**************************************************************
 % SOLVE_LINEAR: Does some stuff.
 %**************************************************************
-addpath('../DSGE_tools');
+addpath('DSGE_tools');
 
 nper  = 20;
 nerf  = 5000;
@@ -129,7 +129,7 @@ for ss = 4:6
     end
 end
 
-saveas(f, '../../../slides/BC_macro_lunch/Figures/taylor_compare1.eps', 'epsc');
+saveas(f, 'figures_tables/taylor_compare1.eps', 'epsc');
 
 for ss = [1,3]
     for jj = 1:4
@@ -137,40 +137,41 @@ for ss = [1,3]
         p{jj,ss+3}.Visible = 'on';
     end
 end
-saveas(f, '../../../slides/BC_macro_lunch/Figures/taylor_compare2.eps', 'epsc');
+saveas(f, 'figures_tables/taylor_compare2.eps', 'epsc');
 
 
-exportgraphics(f, '../../../paper/figures_tables/taylor_compare2.jpg','Resolution',300);
+exportgraphics(f, 'figures_tables/taylor_compare2.jpg','Resolution',300);
 
 
-%% Make table
+%% Make table – Commented out due to current lack of table template
+
 
 %
-tabidx = 1;  %Output
-%tabidx = 2;  %Consumption   
-%tabidx = 3;  %Investment
-%tabidx = 4;  %hours
-
-output_dat = zeros(6,4);
-
-output_dat(:,1) = [rbc_sfw(tabidx),jr_sfw(tabidx),std1_sfw(tabidx),std3_sfw(tabidx),bll1_sfw(tabidx),bll3_sfw(tabidx)]';
-output_dat(:,2) = [rbc_mhe(tabidx),jr_mhe(tabidx),std1_mhe(tabidx),std3_mhe(tabidx),bll1_mhe(tabidx),bll3_mhe(tabidx)]';
-output_dat(:,3) = [rbc_lpf32(tabidx),jr_lpf32(tabidx),std1_lpf32(tabidx),std3_lpf32(tabidx),bll1_lpf32(tabidx),bll3_lpf32(tabidx)]';
-output_dat(:,4) = [rbc_lpf100(tabidx),jr_lpf100(tabidx),std1_lpf100(tabidx),std3_lpf100(tabidx),bll1_lpf100(tabidx),bll3_lpf100(tabidx)]';
-
-cons_dat = zeros(6,4);
-
-cons_dat(:,1) = [rbc_sfw(2),jr_sfw(2),std1_sfw(2),std3_sfw(2),bll1_sfw(2),bll3_sfw(2)]';
-cons_dat(:,2) = [rbc_mhe(2),jr_mhe(2),std1_mhe(2),std3_mhe(2),bll1_mhe(2),bll3_mhe(2)]';
-cons_dat(:,3) = [rbc_lpf32(2),jr_lpf32(2),std1_lpf32(2),std3_lpf32(2),bll1_lpf32(2),bll3_lpf32(2)]';
-cons_dat(:,4) = [rbc_lpf100(2),jr_lpf100(2),std1_lpf100(2),std3_lpf100(2),bll1_lpf100(2),bll3_lpf100(2)]';
-
-
-table_insert('../../../paper/figures_tables/main_table.text', '../../../paper/figures_tables/main_table.tex',...
-    [output_dat,cons_dat], {'%0.2f','%0.2f','%0.2f'});
-
-
-
-
-table_insert('../../../paper/figures_tables/main_table_cons.text', '../../../paper/figures_tables/main_table_cons.tex',...
-    cons_dat, {'%0.2f','%0.2f','%0.2f'});
+% tabidx = 1;  %Output
+% %tabidx = 2;  %Consumption   
+% %tabidx = 3;  %Investment
+% %tabidx = 4;  %hours
+% 
+% output_dat = zeros(6,4);
+% 
+% output_dat(:,1) = [rbc_sfw(tabidx),jr_sfw(tabidx),std1_sfw(tabidx),std3_sfw(tabidx),bll1_sfw(tabidx),bll3_sfw(tabidx)]';
+% output_dat(:,2) = [rbc_mhe(tabidx),jr_mhe(tabidx),std1_mhe(tabidx),std3_mhe(tabidx),bll1_mhe(tabidx),bll3_mhe(tabidx)]';
+% output_dat(:,3) = [rbc_lpf32(tabidx),jr_lpf32(tabidx),std1_lpf32(tabidx),std3_lpf32(tabidx),bll1_lpf32(tabidx),bll3_lpf32(tabidx)]';
+% output_dat(:,4) = [rbc_lpf100(tabidx),jr_lpf100(tabidx),std1_lpf100(tabidx),std3_lpf100(tabidx),bll1_lpf100(tabidx),bll3_lpf100(tabidx)]';
+% 
+% cons_dat = zeros(6,4);
+% 
+% cons_dat(:,1) = [rbc_sfw(2),jr_sfw(2),std1_sfw(2),std3_sfw(2),bll1_sfw(2),bll3_sfw(2)]';
+% cons_dat(:,2) = [rbc_mhe(2),jr_mhe(2),std1_mhe(2),std3_mhe(2),bll1_mhe(2),bll3_mhe(2)]';
+% cons_dat(:,3) = [rbc_lpf32(2),jr_lpf32(2),std1_lpf32(2),std3_lpf32(2),bll1_lpf32(2),bll3_lpf32(2)]';
+% cons_dat(:,4) = [rbc_lpf100(2),jr_lpf100(2),std1_lpf100(2),std3_lpf100(2),bll1_lpf100(2),bll3_lpf100(2)]';
+% 
+% 
+% table_insert('figures_tables/main_table.text', 'figures_tables/main_table.text',...
+%     [output_dat,cons_dat], {'%0.2f','%0.2f','%0.2f'});
+% 
+% 
+% 
+% 
+% table_insert('figures_tables/main_table_cons.text', 'figures_tables/main_table_cons.tex',...
+%     cons_dat, {'%0.2f','%0.2f','%0.2f'});

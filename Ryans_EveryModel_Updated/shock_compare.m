@@ -1,7 +1,7 @@
 %**************************************************************
 % SOLVE_LINEAR: Does some stuff.
 %**************************************************************
-addpath('../DSGE_tools');
+addpath('DSGE_tools');
 
 nper  = 20;
 nerf  = 5000;
@@ -122,50 +122,8 @@ for jj =1:length(phi_grid)
         [~,~,~,ystat(:,jj,ii)] = erf_stats(yerf(erf_idx,:),GAM,ZZ(erf_idx,:),TQA,TQB);
     end
 end
-
-
+   
 %% Make Figure
-f = figure;
-
-p = cell(4,6);
-for jj = 1:4
-   s = subplot(2,2,jj);
-   hold on 
-   
-   p{jj,1} = plot(0:1:jplot-1,g_erf  (jj,1:jplot)  , '-r','linewidth',2);
-   p{jj,2} = plot(0:1:jplot-1,tfp_erf(jj,1:jplot), '-k','linewidth',2);
-   p{jj,3} = plot(0:1:jplot-1,isp_erf(jj,1:jplot), '-b','linewidth',2);
-   p{jj,4} = plot(0:1:jplot-1,mon_erf(jj,1:jplot)  , '-g','linewidth',2);
-   p{jj,5} = plot(0:1:jplot-1,mpt_erf(jj,1:jplot)  , '-','linewidth',2 , 'color', [.6 .4 .8]);
-   p{jj,6} = plot(0:1:jplot-1,.2*mwt_erf(jj,1:jplot)  , '-','linewidth',2 , 'color', [0    0.4471    0.7412]);
-   
-   
-   s.XLim = [0,jplot-1];
-   title(vnms{jj})
-   if jj == 1
-       xlabel('horizon')
-   end
-end
-
-for jj = 1:4
-    s = subplot(2,2,jj);
-    plot(0:nerf, zeros(1,nerf+1), ':k');
-    s.YLim = s.YLim;
-end
-legend('G','TFP','ISP', 'IR', 'PM', 'WM')
-
-%% Now make it a layered figure
-for ss = 2:6
-    for jj = 1:4
-        p{jj,ss}.Visible = false;
-    end
-end
-
-saveas(f, '../../../slides/WEAI_2021_alt/Figures/shock_compare_tight1.eps', 'epsc');
-
-   
-
-    %% Make Figure
 f = figure;
 
 p = cell(1,6);
@@ -192,22 +150,21 @@ end
 
 legend('G','TFP','ISP', 'IR', 'PM', 'WM')
 
-saveas(f, ['../../../slides/WEAI_2021_alt/Figures/shock_compare_tight' num2str(ss) '.eps'], 'epsc');
+saveas(f, ['figures_tables/shock_compare_tight' num2str(ss) '.eps'], 'epsc');
+
+
+exportgraphics(f, 'figures_tables/shock_compare_tight.jpg','Resolution',300);
 
 
 
-exportgraphics(f, '../../../paper/figures_tables/shock_compare_tight.jpg','Resolution',300);
-
-
-
-%% Now make table
-output_dat = zeros(6,4);
-
-output_dat(:,1) = all_sfw(:);
-output_dat(:,2) = all_mhe(:);
-output_dat(:,3) = all_lpf32(:);
-output_dat(:,4) = all_lpf100(:);
-
-
-table_insert('../../../paper/figures_tables/main_table_all.text', '../../../paper/figures_tables/main_table_all.tex',...
-    output_dat, {'%0.2f','%0.2f','%0.2f'});
+%% Now make table commented due to lack of table format
+% output_dat = zeros(6,4);
+% 
+% output_dat(:,1) = all_sfw(:);
+% output_dat(:,2) = all_mhe(:);
+% output_dat(:,3) = all_lpf32(:);
+% output_dat(:,4) = all_lpf100(:);
+% 
+% 
+% table_insert('../../../paper/figures_tables/main_table_all.text', '../../../paper/figures_tables/main_table_all.tex',...
+%     output_dat, {'%0.2f','%0.2f','%0.2f'});
