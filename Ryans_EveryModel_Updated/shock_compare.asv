@@ -1,0 +1,221 @@
+%**************************************************************
+% SOLVE_LINEAR: Does some stuff.
+%**************************************************************
+addpath('../DSGE_tools');
+
+nper  = 20;
+nerf  = 5000;
+
+vnms = {'GDP',  'CON','INV', 'HRS'};
+
+
+%%
+%**************************************************************
+% BLL ERF - TFP
+%**************************************************************
+clear *idx
+[bll_param,bll_set] =bll_parameters;
+load bll_obj
+
+erf_idx = [dy_idx,dc_idx,pi_idx,irt_idx];
+
+% Starndard parameters
+bll_set.phipi =  1.5;       %taylor inflation
+bll_set.phiy  =  0.5;       %taylor output level
+bll_set.phidy =  0  ;       %taylor rule on output growth
+bll_set.rhoi  =  0.5;       %taylor smoothing
+
+yidx = [dy_idx:wpt_idx];
+xidx = [kbar_idx:al_idx];
+eqidx = 1:length([yidx,xidx]);
+
+% %To get almost to RBC outcome...check why not more exact!
+[f, fx, fy, fxp, fyp, eta]=bll_prog(struct2array(bll_param),struct2array(bll_set));
+%%
+%**************************************************************
+% BLL ERF - GOV
+%**************************************************************
+xkidx = g_idx;
+[yerf,~,GAM,ZZ,TQA,TQB] = gx_hx_erf(fy,fx,fyp,fxp,1,yidx,xidx,xkidx,eqidx,nerf);
+g_erf = yerf(erf_idx,:);
+g_erf = g_erf./g_erf(1,1);
+
+[all_sfw,all_mhe,all_lpf32,all_lpf100] = erf_stats(g_erf(1,:),GAM,ZZ(dy_idx,:),TQA,TQB);
+
+
+%%
+%**************************************************************
+% BLL ERF - TFP
+%**************************************************************
+xkidx = a_idx;
+[yerf,~,GAM,ZZ,TQA,TQB] = gx_hx_erf(fy,fx,fyp,fxp,1,yidx,xidx,xkidx,eqidx,nerf);
+tfp_erf = yerf(erf_idx,:);
+tfp_erf = tfp_erf./tfp_erf(1,1);
+
+[all_sfw(2),all_mhe(2),all_lpf32(2),all_lpf100(2)] = erf_stats(tfp_erf(1,:),GAM,ZZ(dy_idx,:),TQA,TQB);
+
+
+%**************************************************************
+% BLL ERF - ISP
+%**************************************************************
+xkidx = d_idx;
+[yerf,~,GAM,ZZ,TQA,TQB] = gx_hx_erf(fy,fx,fyp,fxp,1,yidx,xidx,xkidx,eqidx,nerf);
+isp_erf = yerf(erf_idx,:);
+isp_erf = isp_erf./isp_erf(1,1);
+[all_sfw(3),all_mhe(3),all_lpf32(3),all_lpf100(3)] = erf_stats(isp_erf(1,:),GAM,ZZ(dy_idx,:),TQA,TQB);
+
+
+
+%%
+%**************************************************************
+% BLL ERF - MONEY
+%**************************************************************
+xkidx = q_idx;
+[yerf,~,GAM,ZZ,TQA,TQB] = gx_hx_erf(fy,fx,fyp,fxp,1,yidx,xidx,xkidx,eqidx,nerf);
+mon_erf = yerf(erf_idx,:);
+mon_erf = mon_erf./mon_erf(1,1);
+
+[all_sfw(4),all_mhe(4),all_lpf32(4),all_lpf100(4)] = erf_stats(mon_erf(1,:),GAM,ZZ(dy_idx,:),TQA,TQB);
+
+
+%%
+%**************************************************************
+% BLL ERF - EPSP
+%**************************************************************
+xkidx = mpt_idx;
+[yerf,~,GAM,ZZ,TQA,TQB] = gx_hx_erf(fy,fx,fyp,fxp,1,yidx,xidx,xkidx,eqidx,nerf);
+mpt_erf = yerf(erf_idx,:);
+mpt_erf = mpt_erf./mpt_erf(1,1);
+[all_sfw(5),all_mhe(5),all_lpf32(5),all_lpf100(5)] = erf_stats(mpt_erf(1,:),GAM,ZZ(dy_idx,:),TQA,TQB);
+
+
+%%
+%**************************************************************
+% BLL ERF - EPSW
+%**************************************************************
+xkidx = mwt_idx;
+[yerf,~,GAM,ZZ,TQA,TQB] = gx_hx_erf(fy,fx,fyp,fxp,1,yidx,xidx,xkidx,eqidx,nerf);
+mwt_erf = yerf(erf_idx,:);
+mwt_erf = mwt_erf./mwt_erf(1,1);
+
+[all_sfw(6),all_mhe(6),all_lpf32(6),all_lpf100(6)] = erf_stats(mwt_erf(1,:),GAM,ZZ(dy_idx,:),TQA,TQB);
+
+%**************************************************************
+% BLL ERF - EPSW
+%**************************************************************
+shock_list = [g_idx,a_idx,d_idx,q_idx,mpt_idx,mwt_idx];
+
+nphi = 10;
+phi_grid = linspace(1.05,2.5,nphi);
+ystat = zeros(6,nphi); ystat2 = 0;
+for jj =1:length(phi_grid)
+    bll_set.phipi = phi_grid(jj);
+    [f, fx, fy, fxp, fyp, eta]=bll_prog(struct2array(bll_param),struct2array(bll_set));
+
+    for ii = 1:6
+        [yerf,~,GAM,ZZ,TQA,TQB] = gx_hx_erf(fy,fx,fyp,fxp,1,yidx,xidx,shock_list(ii),eqidx,nerf);
+
+        [~,~,~,ystat(ii,jj)] = erf_stats(yerf(dy_idx,:),GAM,ZZ(dy_idx,:),TQA,TQB);
+    end
+end
+
+
+%% Make Figure
+f = figure;
+
+p = cell(4,6);
+for jj = 1:4
+   s = subplot(2,2,jj);
+   hold on 
+   
+   p{jj,1} = plot(0:1:jplot-1,g_erf  (jj,1:jplot)  , '-r','linewidth',2);
+   p{jj,2} = plot(0:1:jplot-1,tfp_erf(jj,1:jplot), '-k','linewidth',2);
+   p{jj,3} = plot(0:1:jplot-1,isp_erf(jj,1:jplot), '-b','linewidth',2);
+   p{jj,4} = plot(0:1:jplot-1,mon_erf(jj,1:jplot)  , '-g','linewidth',2);
+   p{jj,5} = plot(0:1:jplot-1,mpt_erf(jj,1:jplot)  , '-','linewidth',2 , 'color', [.6 .4 .8]);
+   p{jj,6} = plot(0:1:jplot-1,.2*mwt_erf(jj,1:jplot)  , '-','linewidth',2 , 'color', [0    0.4471    0.7412]);
+   
+   
+   s.XLim = [0,jplot-1];
+   title(vnms{jj})
+   if jj == 1
+       xlabel('horizon')
+   end
+end
+
+for jj = 1:4
+    s = subplot(2,2,jj);
+    plot(0:nerf, zeros(1,nerf+1), ':k');
+    s.YLim = s.YLim;
+end
+legend('G','TFP','ISP', 'IR', 'PM', 'WM')
+
+%% Now make it a layered figure
+for ss = 2:6
+    for jj = 1:4
+        p{jj,ss}.Visible = false;
+    end
+end
+
+saveas(f, '../../../slides/WEAI_2021_alt/Figures/shock_compare_tight1.eps', 'epsc');
+
+for ss = 2:6
+   
+
+    %% Make Figure
+f = figure;
+
+p = cell(4,6);
+ls = {'-r','-k','-b','-g',''}
+for ii = 1:6
+   s = subplot(2,2,jj);
+   hold on 
+   
+   p{jj,1} = plot(phi_grid,ystat(ii,:)  , '-r','linewidth',2);
+   p{jj,2} = plot(0:1:jplot-1,tfp_erf(jj,1:jplot), '-k','linewidth',2);
+   p{jj,3} = plot(0:1:jplot-1,isp_erf(jj,1:jplot), '-b','linewidth',2);
+   p{jj,4} = plot(0:1:jplot-1,mon_erf(jj,1:jplot)  , '-g','linewidth',2);
+   p{jj,5} = plot(0:1:jplot-1,mpt_erf(jj,1:jplot)  , '-','linewidth',2 , 'color', [.6 .4 .8]);
+   p{jj,6} = plot(0:1:jplot-1,.2*mwt_erf(jj,1:jplot)  , '-','linewidth',2 , 'color', [0    0.4471    0.7412]);
+   
+   
+   s.XLim = [0,jplot-1];
+   title(vnms{jj})
+   if jj == 1
+       xlabel('horizon')
+   end
+end
+
+for jj = 1:4
+    s = subplot(2,2,jj);
+    plot(0:nerf, zeros(1,nerf+1), ':k');
+    s.YLim = s.YLim;
+end
+legend('G','TFP','ISP', 'IR', 'PM', 'WM')
+
+    
+    
+    for jj = 1:4
+        p{jj,ss-1}.Color = .75+min(.2*p{jj,ss-1}.Color,1); 
+        p{jj,ss}.Visible = true;
+    end
+    
+    saveas(f, ['../../../slides/WEAI_2021_alt/Figures/shock_compare_tight' num2str(ss) '.eps'], 'epsc');
+
+end
+
+exportgraphics(f, '../../../paper/figures_tables/shock_compare_tight.jpg','Resolution',300);
+
+
+
+%% Now make table
+output_dat = zeros(6,4);
+
+output_dat(:,1) = all_sfw(:);
+output_dat(:,2) = all_mhe(:);
+output_dat(:,3) = all_lpf32(:);
+output_dat(:,4) = all_lpf100(:);
+
+
+table_insert('../../../paper/figures_tables/main_table_all.text', '../../../paper/figures_tables/main_table_all.tex',...
+    output_dat, {'%0.2f','%0.2f','%0.2f'});
