@@ -1,7 +1,7 @@
 %**************************************************************
 % SOLVE_LINEAR: Does some stuff.
 %**************************************************************
-addpath('../DSGE_tools');
+addpath('DSGE_tools/');
 
 nper  = 20;
 nerf  = 5000;
@@ -107,7 +107,7 @@ for jj = 1:4
 end
 legend('RBC', 'JR');%, 'NK', 'NK-RBC', 'SW')
 
-exportgraphics(f, '../../../paper/figures_tables/tfp_compare_real.jpg','Resolution',300);
+exportgraphics(f, 'figures_tables/tfp_compare_real.jpg','Resolution',300);
 
 
 %% Additional statistics
