@@ -7,7 +7,6 @@
 
 function [Yss,Xss,param,set] = jr_ss(param,set)
 
-
 %Upack parameters object
 param_unpack
 

@@ -3,7 +3,6 @@
 
 function [mod,param,set] = rbc_model(param,set)
 
-
 %Name of text files
 mod.fname   = 'rbc_prog.m';
 mod.ss_call = 'rbc_ss.m';

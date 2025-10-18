@@ -1,6 +1,5 @@
 function [SFW,MHE,LPF32,LPF100] = erf_stats(erf_in,GAM,ZZ,TQA,TQB)
 
-
 %Share future weights
 %SFW = sum(abs(erf_in(:,2:end,:).^2),2)./sum(abs(erf_in.^2),2);
 

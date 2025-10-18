@@ -3,10 +3,7 @@
 % usage:
 % 
 % [ss, parameters] =model_ss(param)
-
-
 function [Yss,Xss,param,set] = bll_ss(param,set)
-
 
 %Upack parameters object
 param_unpack

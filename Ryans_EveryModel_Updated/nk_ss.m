@@ -7,7 +7,6 @@
 
 function [ss,param,set] = rbc_ss(param,set)
 
-
 %Upack parameters object
 param_unpack
 

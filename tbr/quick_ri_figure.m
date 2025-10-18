@@ -4,7 +4,7 @@
 clear *idx
 [bll_param,bll_set] =bll_parameters;
 load bll_obj
-
+disp('quick_ri_fig \n');
 nerf = 500;
 
 phipi = linspace(1.01,5,10);

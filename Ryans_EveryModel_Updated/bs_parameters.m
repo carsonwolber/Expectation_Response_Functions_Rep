@@ -1,8 +1,6 @@
 % PARAMETETRS - This function returns a parameter structure to use in the model solution.
-
-
 function [param,set] = bs_parameters()
-                                                       
+                                               
 set.adiff      = 0;
 set.approx_deg = 1;
 

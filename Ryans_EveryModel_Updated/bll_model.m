@@ -1,8 +1,5 @@
 %RBC Model code
- 
-
 function [mod,param,set] = bll_model(param,set)
-
 
 %Name of text files
 mod.fname   = 'bll_prog.m';

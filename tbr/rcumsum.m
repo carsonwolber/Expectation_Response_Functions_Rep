@@ -1,5 +1,5 @@
 function out = rcumsum(x,dim)
-
+disp('rcumsum \n');
 if nargin == 1
     dim = 1;
 end

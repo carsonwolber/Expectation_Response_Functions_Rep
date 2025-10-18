@@ -2,7 +2,7 @@
 % SOLVE_LINEAR: Does some stuff.
 %**************************************************************
 addpath('../DSGE_tools');
-
+disp('solve_linear \n');
 nper =20;
 load model_object
 [param,set] = parameters;

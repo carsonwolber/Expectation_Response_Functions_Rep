@@ -1,7 +1,7 @@
 %QUICK_KALMAN - Original representation of the Barsky-Sims (2012)
 %information structure
 function [out,GG0,GG1,GG2,F,sqQ,H,sqR,GG3] = quick_kalman(param)
-
+disp('quick_kalman \n');
 rhoga = param.rhoga;
 siges = param.siges;
 sigga = param.sigga;

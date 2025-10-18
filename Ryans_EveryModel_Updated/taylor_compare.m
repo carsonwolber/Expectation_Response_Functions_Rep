@@ -2,7 +2,6 @@
 % SOLVE_LINEAR: Does some stuff.
 %**************************************************************
 addpath('DSGE_tools');
-
 nper  = 20;
 nerf  = 5000;
 

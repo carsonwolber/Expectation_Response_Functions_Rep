@@ -2,7 +2,7 @@
 %information structure
 
 function [out,H,F,Q,GG0,GG1,GG2,sqQ,P] = quick_kalman_noise(param)
-
+disp('quick_kalman_noise \n');
 rhoga = param.rhoga;
 siges = param.siges;
 sigga = param.sigga;

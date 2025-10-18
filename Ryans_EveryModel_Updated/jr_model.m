@@ -1,8 +1,6 @@
+
 %RBC Model code
- 
-
 function [mod,param,set] = jr_model(param,set)
-
 
 %Name of text files
 mod.fname   = 'jr_prog.m';

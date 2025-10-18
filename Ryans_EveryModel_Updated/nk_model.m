@@ -1,8 +1,5 @@
 %RBC Model code
- 
-
 function [mod,param,set] = nk_model(param,set)
-
 
 %Name of text files
 mod.fname   = 'nk_prog.m';
