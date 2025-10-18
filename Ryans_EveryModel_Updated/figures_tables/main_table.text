@@ -1,0 +1,26 @@
+
+\begin{table}[t]
+ \centering\tabcolsep=0.2cm
+	\small
+		\begin{tabular}
+		[c]{lcccc||cccc}\toprule 
+                  & \multicolumn{4}{c||}{Output} & \multicolumn{4}{c}{Consumption} \\
+		   & \scriptsize SFW & \scriptsize MHE & \scriptsize LPF(32) & \scriptsize LPF(100)  & \scriptsize SFW & \scriptsize MHE & \scriptsize LPF(32) & \scriptsize LPF(100) \\[2pt]
+		   \hline \hline \\[-4pt]
+ 		RBC              & #1# & #2# &#3# &#4# & #5# & #6#  &#7# &#8# \\[5pt]    
+JR  & #9# & #10# &#11# &#12# & #13# & #14#  &#15# &#16# \\[5pt]
+3-eq NK  (stand.~calib.)            & #17# & #18# &#19# &#20# & #21# & #22#  &#23# &#24# \\[5pt]
+Med.~scale NK  (stand.~calib.)  & #25# & #26# &#27# &#28# & #29# & #30#  &#31# &#32# \\[5pt]
+3-eq NK  (BLL calib.) & #33# & #34# &#35# &#36# & #37# & #38#  &#39# &#40# \\[5pt]
+Med.~scale NK  (BLL calib.)  & #41# & #42# &#43# &#44# & #45# & #46#  &#47# &#48# \\[2pt]
+
+		\bottomrule 
+ %\multicolumn{5}{p{4.2in}} {\tiny Note: Add a note here?.}
+	\end{tabular}
+
+
+
+\caption{ERF summary statistics for technology: Output \& Consumption  }
+\label{tab: main_table}
+ 
+\end{table}
